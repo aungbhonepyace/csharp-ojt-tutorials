@@ -8,7 +8,7 @@ namespace Tutorial1
         {
             int loanAmount;
             // Loop until valid loan amount is provided
-            while (!TryGetValidIntegerInput("Enter the loan amount:", out loanAmount) || loanAmount < 0)
+            while (!TryGetValidIntegerInput("Enter the loan amount:", out loanAmount) || loanAmount <= 0)
             {
                 // Display error message for invalid input
                 Console.WriteLine("Please enter a valid positive integer value.");
@@ -16,7 +16,7 @@ namespace Tutorial1
 
             int interestRate;
             // Loop until valid interest rate is provided
-            while (!TryGetValidIntegerInput("Enter the interest rate (%):", out interestRate) || interestRate < 0)
+            while (!TryGetValidIntegerInput("Enter the interest rate (%):", out interestRate) || interestRate <= 0)
             {
                 // Display error message for invalid input
                 Console.WriteLine("Please enter a valid positive integer value.");
@@ -24,7 +24,7 @@ namespace Tutorial1
 
             int loanDuration;
             // Loop until valid loan duration is provided
-            while (!TryGetValidIntegerInput("Enter the loan duration (months):", out loanDuration) || loanDuration < 0)
+            while (!TryGetValidIntegerInput("Enter the loan duration (months):", out loanDuration) || loanDuration <= 0)
             {
                 // Display error message for invalid input
                 Console.WriteLine("Please enter a valid positive integer value.");
