@@ -60,7 +60,7 @@
             this.rtxtAddress = new System.Windows.Forms.RichTextBox();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.txtJoinFrom = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.txtDob = new System.Windows.Forms.DateTimePicker();
             this.btnAddUpdate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -134,6 +134,7 @@
             this.txtStaffNo.BackColor = System.Drawing.SystemColors.GrayText;
             this.txtStaffNo.Location = new System.Drawing.Point(135, 6);
             this.txtStaffNo.Name = "txtStaffNo";
+            this.txtStaffNo.ReadOnly = true;
             this.txtStaffNo.Size = new System.Drawing.Size(100, 20);
             this.txtStaffNo.TabIndex = 7;
             // 
@@ -149,6 +150,7 @@
             this.txtAge.BackColor = System.Drawing.SystemColors.GrayText;
             this.txtAge.Location = new System.Drawing.Point(135, 195);
             this.txtAge.Name = "txtAge";
+            this.txtAge.ReadOnly = true;
             this.txtAge.Size = new System.Drawing.Size(100, 20);
             this.txtAge.TabIndex = 11;
             // 
@@ -325,7 +327,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(896, 584);
+            this.label7.Location = new System.Drawing.Point(364, 251);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(45, 13);
             this.label7.TabIndex = 30;
@@ -333,7 +335,7 @@
             // 
             // rtxtAddress
             // 
-            this.rtxtAddress.Location = new System.Drawing.Point(994, 584);
+            this.rtxtAddress.Location = new System.Drawing.Point(444, 248);
             this.rtxtAddress.Name = "rtxtAddress";
             this.rtxtAddress.Size = new System.Drawing.Size(181, 69);
             this.rtxtAddress.TabIndex = 31;
@@ -344,8 +346,9 @@
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Location = new System.Drawing.Point(44, 410);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView.Size = new System.Drawing.Size(1131, 150);
             this.dataGridView.TabIndex = 32;
+            this.dataGridView.SelectionChanged += new System.EventHandler(this.dataGridView_SelectionChanged);
             // 
             // txtJoinFrom
             // 
@@ -355,13 +358,13 @@
             this.txtJoinFrom.Size = new System.Drawing.Size(100, 20);
             this.txtJoinFrom.TabIndex = 33;
             // 
-            // dateTimePicker1
+            // txtDob
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(135, 153);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(100, 20);
-            this.dateTimePicker1.TabIndex = 34;
+            this.txtDob.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.txtDob.Location = new System.Drawing.Point(135, 153);
+            this.txtDob.Name = "txtDob";
+            this.txtDob.Size = new System.Drawing.Size(100, 20);
+            this.txtDob.TabIndex = 34;
             // 
             // btnAddUpdate
             // 
@@ -379,7 +382,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1215, 665);
             this.Controls.Add(this.btnAddUpdate);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.txtDob);
             this.Controls.Add(this.txtJoinFrom);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.rtxtAddress);
@@ -456,7 +459,7 @@
         private System.Windows.Forms.RichTextBox rtxtAddress;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.DateTimePicker txtJoinFrom;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker txtDob;
         private System.Windows.Forms.Button btnAddUpdate;
     }
 }
