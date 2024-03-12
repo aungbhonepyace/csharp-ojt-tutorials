@@ -100,15 +100,13 @@ namespace Tutorial3
         // Method to calculate age from date of birth
         private bool ValidateInputFields()
         {
-            // Implement input field validation logic here
-            // Return true if all required fields are filled, otherwise return false
-            // For example:
-            // if (string.IsNullOrEmpty(txtStaffName.Text) || string.IsNullOrEmpty(txtNrcNo.Text))
-            //     return false;
-            // else
-            //     return true;
-
-            return true; // Placeholder return value
+            if (string.IsNullOrEmpty(txtStaffName.Text) || string.IsNullOrEmpty(txtNrcNo.Text) || 
+                string.IsNullOrEmpty(txtJoinFrom.Text) || string.IsNullOrEmpty(txtDob.Text) ||
+                string.IsNullOrEmpty(cbStaffType.Text) || string.IsNullOrEmpty(txtNrcNo.Text) ||
+                string.IsNullOrEmpty(txtPhoneone.Text))
+                 return false;
+            else
+                return true;
         }
 
         private string GetSelectedGender()
@@ -196,8 +194,14 @@ namespace Tutorial3
 
         private void AddData()
         {
+
             // Validate input fields before adding data
-            if (!ValidateInputFields())
+            if (string.IsNullOrEmpty(txtStaffName.Text) ||
+                string.IsNullOrEmpty(txtJoinFrom.Text) ||
+                string.IsNullOrEmpty(txtDob.Text) ||
+                string.IsNullOrEmpty(cbStaffType.Text) ||
+                string.IsNullOrEmpty(txtNrcNo.Text) ||
+                string.IsNullOrEmpty(txtPhoneone.Text))
             {
                 MessageBox.Show("Please fill all required fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -308,6 +312,40 @@ namespace Tutorial3
             {
                 // If not in update mode, perform add operation
                 AddData();
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearInputFields(); // clear input fields
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // Check if the form is in update mode
+            if (updatingMode && rowIndexToUpdate >= 0)
+            {
+                // Optionally, prompt the user for confirmation
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this row?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    // Remove the selected row from the DataGridView
+                    dataGridView.Rows.RemoveAt(rowIndexToUpdate);
+
+                    // Remove the corresponding data from datagridview
+                    staffList.RemoveAt(rowIndexToUpdate);
+
+                    // Clear input fields after delete
+                    ClearInputFields();
+
+                    // Reset update mode
+                    updatingMode = false;
+                    rowIndexToUpdate = -1;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a row to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
