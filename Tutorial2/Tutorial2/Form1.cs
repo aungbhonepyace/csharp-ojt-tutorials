@@ -34,7 +34,7 @@ namespace Tutorial2
         {
             TextBox textBox = (TextBox)sender;
             int value;
-            if (!int.TryParse(textBox.Text, out value) || value < 0)
+            if (!int.TryParse(textBox.Text, out value) || value <= 0)
             {
                 MessageBox.Show("Please enter a valid positive integer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBox.Focus();
