@@ -61,6 +61,7 @@
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.txtJoinFrom = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.btnAddUpdate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -307,6 +308,7 @@
             this.pictureBoxPreview.Location = new System.Drawing.Point(444, 154);
             this.pictureBoxPreview.Name = "pictureBoxPreview";
             this.pictureBoxPreview.Size = new System.Drawing.Size(100, 62);
+            this.pictureBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBoxPreview.TabIndex = 27;
             this.pictureBoxPreview.TabStop = false;
             // 
@@ -323,7 +325,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(367, 259);
+            this.label7.Location = new System.Drawing.Point(896, 584);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(45, 13);
             this.label7.TabIndex = 30;
@@ -331,7 +333,7 @@
             // 
             // rtxtAddress
             // 
-            this.rtxtAddress.Location = new System.Drawing.Point(444, 259);
+            this.rtxtAddress.Location = new System.Drawing.Point(994, 584);
             this.rtxtAddress.Name = "rtxtAddress";
             this.rtxtAddress.Size = new System.Drawing.Size(181, 69);
             this.rtxtAddress.TabIndex = 31;
@@ -361,11 +363,22 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(100, 20);
             this.dateTimePicker1.TabIndex = 34;
             // 
+            // btnAddUpdate
+            // 
+            this.btnAddUpdate.Location = new System.Drawing.Point(274, 360);
+            this.btnAddUpdate.Name = "btnAddUpdate";
+            this.btnAddUpdate.Size = new System.Drawing.Size(103, 23);
+            this.btnAddUpdate.TabIndex = 35;
+            this.btnAddUpdate.Text = "Add / Update";
+            this.btnAddUpdate.UseVisualStyleBackColor = true;
+            this.btnAddUpdate.Click += new System.EventHandler(this.btnAddUpdate_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1215, 665);
+            this.Controls.Add(this.btnAddUpdate);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.txtJoinFrom);
             this.Controls.Add(this.dataGridView);
@@ -444,6 +457,7 @@
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.DateTimePicker txtJoinFrom;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Button btnAddUpdate;
     }
 }
 

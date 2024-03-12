@@ -16,7 +16,7 @@ namespace Tutorial3
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new txtDob());
+            Application.Run(new Form1());
         }
     }
 }

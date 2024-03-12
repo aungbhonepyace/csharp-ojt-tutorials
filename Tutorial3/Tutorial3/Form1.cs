@@ -14,38 +14,37 @@ namespace Tutorial3
     public partial class Form1: Form
     {
         public List<StaffData> staffData { get; set; }
-        private List<StaffData> staffList = new List<Staff>();
+        private List<StaffData> staffList = new List<StaffData>();
         private string selectedImagePath = null; // set the image path
 
         public Form1()
         {
             InitializeComponent();
-            InitializeStaffList();
+            //InitializeStaffList();
             PopulateDataGridView();
         }
 
-        private void InitializeStaffList()
+        /*private void InitializeStaffList()
         {
             // Populate staffList with sample data
-            staffList.Add(new Staff
+            staffList.Add(new StaffData
             {
-                StaffNo = 1,
-                // Assuming you have the image path or image object
-                // Replace "imagePath1" with your actual image path or provide an Image object
-                Image = Image.FromFile("imagePath1"),
-                StaffName = "John Doe",
-                JoinFrom = new DateTime(2022, 1, 1),
-                StaffType = "Full-time",
-                NRCNo = "12345",
-                Gender = "Male",
-                Age = 30,
-                PhoneNo1 = "123456789",
-                PhoneNo2 = "987654321",
-                Address = "123 Main St, City"
+                txtStaffNo = 1,
+                txtStaffName = "John Doe",
+                txtJoinFrom = new DateTime(2022, 1, 1),
+                txtDob = new DateTime(2002, 6, 6),
+                txtAge = 23,
+                cbStaffType = "Full Time",
+                Image = Image.FromFile("C:\\Users\\Joistich\\Pictures\\Aung_Bhone_Pyae_bnw.jpg"),
+                txtNrcNo = "12345",
+                gender = "Male",
+                txtPhoneone = "123456789",
+                txtPhonetwo = "987654321",
+                rtxtAddress = "123 Main St, City"
             });
 
             // Add more sample staff data if needed
-        }
+        }*/
 
         private void PopulateDataGridView()
         {
@@ -76,18 +75,31 @@ namespace Tutorial3
                 DialogResult result = openFileDialog.ShowDialog();
 
                 // Check if the user selected a file
+                // Check if the user selected a file
                 if (result == DialogResult.OK)
                 {
                     // Get the selected file path
                     selectedImagePath = openFileDialog.FileName;
 
-                    // Display the selected image in the PictureBox
-                    pictureBoxPreview.Image = Image.FromFile(selectedImagePath);
+                    try
+                    {
+                        // Display the selected image in the PictureBox
+                        pictureBoxPreview.Image = Image.FromFile(@"C:\Users\Joistich\Pictures\Aung_Bhone_Pyae_bnw.jpg");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error loading image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAddUpdate_Click(object sender, EventArgs e)
         {
 
         }
