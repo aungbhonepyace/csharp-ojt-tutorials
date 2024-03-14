@@ -179,7 +179,7 @@ namespace Tutorial3
         private void dataGridView_SelectionChanged(object sender, EventArgs e)
         {
             // Check if any row is selected
-            if (dataGridView.SelectedRows.Count > 0)
+            if (dataGridView.SelectedRows.Count > 0 && dataGridView.Rows.Count > 1)
             {
                 // Set the form to update mode
                 updatingMode = true;
