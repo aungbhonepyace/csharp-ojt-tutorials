@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -27,6 +28,23 @@ namespace Tutorial3
         {
             InitializeComponent();
             PopulateDataGridView();
+            dataGridView.ReadOnly = true;
+
+            // Set the maximum length for txtStaffName to 50 characters
+            txtStaffName.MaxLength = 50;
+
+            // Set the maximum length for txtNrcNo to 15 characters
+            txtNrcNo.MaxLength = 15;
+
+            // Set the maximum length for txtPhoneone and txtPhonetwo to 15 characters each
+            txtPhoneone.MaxLength = 15;
+            txtPhonetwo.MaxLength = 15;
+
+            // Set the maximum length for the address RichTextBox to 200 characters
+            rtxtAddress.MaxLength = 200;
+
+            // Maximize the form
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void PopulateDataGridView()
@@ -94,20 +112,87 @@ namespace Tutorial3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            rdoOther.Checked = true; // Set "Other" radio button checked by default
+            cbStaffType.SelectedIndex = 0; // set full time to be default
+            btnDelete.Visible = false; // delte button hide at start
         }
 
         // Method to calculate age from date of birth
+        private bool IsNameValid(string name)
+        {
+            return !string.IsNullOrWhiteSpace(name);
+        }
+
+        private bool IsJoinFromValid(DateTime joinFrom)
+        {
+            // Add your custom validation logic here if needed
+            return true;
+        }
+
+        private bool IsDobValid(DateTime dob)
+        {
+            // Add your custom validation logic here if needed
+            return true;
+        }
+
+        private bool IsStaffTypeValid(string staffType)
+        {
+            // Add your custom validation logic here if needed
+            return !string.IsNullOrWhiteSpace(staffType);
+        }
+
+        private bool IsNrcNoValid(string nrcNo)
+        {
+            // Add your custom validation logic here if needed
+            return !string.IsNullOrWhiteSpace(nrcNo);
+        }
+
+        private bool IsPhoneNoValid(string phoneNo)
+        {
+            // Add your custom validation logic here if needed
+            return !string.IsNullOrWhiteSpace(phoneNo);
+        }
+
         private bool ValidateInputFields()
         {
-            if (string.IsNullOrEmpty(txtStaffName.Text) || string.IsNullOrEmpty(txtNrcNo.Text) || 
-                string.IsNullOrEmpty(txtJoinFrom.Text) || string.IsNullOrEmpty(txtDob.Text) ||
-                string.IsNullOrEmpty(cbStaffType.Text) || string.IsNullOrEmpty(txtNrcNo.Text) ||
-                string.IsNullOrEmpty(txtPhoneone.Text))
-                 return false;
-            else
-                return true;
+            if (!IsNameValid(txtStaffName.Text))
+            {
+                MessageBox.Show("Please enter a valid name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!IsJoinFromValid(txtJoinFrom.Value))
+            {
+                MessageBox.Show("Please enter a valid Join From date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!IsDobValid(txtDob.Value))
+            {
+                MessageBox.Show("Please enter a valid Date of Birth.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!IsStaffTypeValid(cbStaffType.Text))
+            {
+                MessageBox.Show("Please select a valid Staff Type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!IsNrcNoValid(txtNrcNo.Text))
+            {
+                MessageBox.Show("Please enter a valid NRC No.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!IsPhoneNoValid(txtPhoneone.Text))
+            {
+                MessageBox.Show("Please enter a valid Phone No.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
         }
+
 
         private string GetSelectedGender()
         {
@@ -125,16 +210,18 @@ namespace Tutorial3
         private int CalculateAge(DateTime dob)
         {
             // Calculate age from date of birth
-            DateTime today = DateTime.Today;
-            int age = today.Year - dob.Year;
-            if (dob.Date > today.AddYears(-age))
+            int age = DateTime.Today.Year - dob.Year;
+            if (dob.Date > DateTime.Today.AddYears(-age))
+            {
                 age--;
+            }
             return age;
         }
 
         private void ClearInputFields()
         {
             // Clear all input fields
+            txtStaffNo.Clear();
             txtStaffName.Clear();
             txtJoinFrom.Value = DateTime.Now;
             txtDob.Value = DateTime.Now;
@@ -149,6 +236,8 @@ namespace Tutorial3
             pictureBoxPreview.Image = null;
             selectedImagePath = null;
             rtxtAddress.Clear();
+
+            cbStaffType.SelectedIndex = 0; // set full time to be default
         }
 
         private void PopulateInputFields(int rowIndex)
@@ -179,7 +268,9 @@ namespace Tutorial3
         private void dataGridView_SelectionChanged(object sender, EventArgs e)
         {
             // Check if any row is selected
-            if (dataGridView.SelectedRows.Count > 0 && dataGridView.Rows.Count > 1)
+            if (dataGridView.SelectedRows.Count > 0 &&
+                dataGridView.SelectedRows[0].Index != -1 &&
+                dataGridView.SelectedRows[0].Cells["colStaffNo"].Value != null)
             {
                 // Set the form to update mode
                 updatingMode = true;
@@ -189,6 +280,16 @@ namespace Tutorial3
 
                 // Populate input fields with data from the selected row
                 PopulateInputFields(rowIndexToUpdate);
+
+                // delete button control
+                btnDelete.Visible = updatingMode;
+            }
+            else
+            {
+                updatingMode = false;
+
+                // delete button control
+                btnDelete.Visible = updatingMode;
             }
         }
 
@@ -196,12 +297,7 @@ namespace Tutorial3
         {
 
             // Validate input fields before adding data
-            if (string.IsNullOrEmpty(txtStaffName.Text) ||
-                string.IsNullOrEmpty(txtJoinFrom.Text) ||
-                string.IsNullOrEmpty(txtDob.Text) ||
-                string.IsNullOrEmpty(cbStaffType.Text) ||
-                string.IsNullOrEmpty(txtNrcNo.Text) ||
-                string.IsNullOrEmpty(txtPhoneone.Text))
+            if (!ValidateInputFields())
             {
                 MessageBox.Show("Please fill all required fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -212,6 +308,29 @@ namespace Tutorial3
 
             // Calculate age from date of birth
             int age = CalculateAge(txtDob.Value);
+
+            // Check if age is valid (not 0)
+            if (age == 0)
+            {
+                MessageBox.Show("Please enter a valid date of birth.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Initialize image as null
+            Image image = null;
+            if (!string.IsNullOrEmpty(selectedImagePath))
+            {
+                try
+                {
+                    // Load the image if the image path is not null or empty
+                    image = Image.FromFile(selectedImagePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
             // Create a new StaffData object with input field values
             StaffData newStaff = new StaffData
@@ -226,7 +345,7 @@ namespace Tutorial3
                 gender = selectedGender,
                 txtPhoneone = txtPhoneone.Text,
                 txtPhonetwo = txtPhonetwo.Text,
-                Image = Image.FromFile(selectedImagePath),
+                Image = image,
                 rtxtAddress = rtxtAddress.Text
             };
 
@@ -267,6 +386,13 @@ namespace Tutorial3
             // Calculate age from date of birth
             int age = CalculateAge(txtDob.Value);
 
+            // Check if age is valid (not 0)
+            if (age == 0)
+            {
+                MessageBox.Show("Please enter a valid date of birth.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Update the corresponding StaffData object in the list with input field values
             StaffData updatedStaff = staffList[rowIndexToUpdate];
             updatedStaff.txtStaffName = txtStaffName.Text;
@@ -278,7 +404,12 @@ namespace Tutorial3
             updatedStaff.gender = selectedGender;
             updatedStaff.txtPhoneone = txtPhoneone.Text;
             updatedStaff.txtPhonetwo = txtPhonetwo.Text;
-            updatedStaff.Image = Image.FromFile(selectedImagePath);
+            // Check if the user has selected an image
+            if (!string.IsNullOrEmpty(selectedImagePath))
+            {
+                // Load the image only if the user has selected an image file
+                updatedStaff.Image = Image.FromFile(selectedImagePath);
+            }
             updatedStaff.rtxtAddress = rtxtAddress.Text;
 
             // Update the corresponding row in the DataGridView with updated staff data
@@ -318,6 +449,8 @@ namespace Tutorial3
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearInputFields(); // clear input fields
+            btnDelete.Visible = false; // delete button hide
+            updatingMode = false;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
