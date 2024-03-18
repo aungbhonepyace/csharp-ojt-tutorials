@@ -27,6 +27,9 @@ namespace Tutorial3
         private bool updatingMode = false; // Flag to indicate whether the form is in update mode
         private int rowIndexToUpdate = -1;
 
+        private int currentPage = 1;
+        private int pageSize = 10; // Number of rows per page
+
         // Connection string
         string connectionString = @"Data Source=DESKTOP-ET26M53\SQLEXPRESS;Initial Catalog=staffData;Integrated Security=True;User ID=sa;Password=root;";
 
@@ -63,8 +66,11 @@ namespace Tutorial3
                     // Open connection
                     connection.Open();
 
-                    // Retrieve data where is_deleted is 0
-                    string query = "SELECT * FROM staffTable WHERE is_deleted = 0";
+                    // Calculate offset based on current page and page size
+                    int offset = (currentPage - 1) * pageSize;
+
+                    // Retrieve data with pagination
+                    string query = $"SELECT * FROM staffTable WHERE is_deleted = 0 ORDER BY staff_no OFFSET {offset} ROWS FETCH NEXT {pageSize} ROWS ONLY";
                     SqlCommand command = new SqlCommand(query, connection);
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
                     DataTable dataTable = new DataTable();
@@ -589,6 +595,21 @@ namespace Tutorial3
             {
                 MessageBox.Show("Please select a row to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                PopulateDataGridViewFromDatabase();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            currentPage++;
+            PopulateDataGridViewFromDatabase();
         }
     }
 }
