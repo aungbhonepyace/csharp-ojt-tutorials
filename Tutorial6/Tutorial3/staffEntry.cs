@@ -16,7 +16,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace Tutorial3
 {
 
-    public partial class Form1 : Form
+    public partial class staffEntry : Form
     {
         public List<StaffData> staffData { get; set; }
         private List<StaffData> staffList = new List<StaffData>();
@@ -27,10 +27,13 @@ namespace Tutorial3
         private bool updatingMode = false; // Flag to indicate whether the form is in update mode
         private int rowIndexToUpdate = -1;
 
+        private int currentPage = 1;
+        private int pageSize = 10; // Number of rows per page
+
         // Connection string
         string connectionString = @"Data Source=DESKTOP-ET26M53\SQLEXPRESS;Initial Catalog=staffData;Integrated Security=True;User ID=sa;Password=root;";
 
-        public Form1()
+        public staffEntry()
         {
             InitializeComponent();
             PopulateDataGridViewFromDatabase();
@@ -63,8 +66,11 @@ namespace Tutorial3
                     // Open connection
                     connection.Open();
 
-                    // Retrieve data where is_deleted is 0
-                    string query = "SELECT * FROM staffTable WHERE is_deleted = 0";
+                    // Calculate offset based on current page and page size
+                    int offset = (currentPage - 1) * pageSize;
+
+                    // Retrieve data with pagination
+                    string query = $"SELECT * FROM staffTable WHERE is_deleted = 0 ORDER BY staff_no OFFSET {offset} ROWS FETCH NEXT {pageSize} ROWS ONLY";
                     SqlCommand command = new SqlCommand(query, connection);
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
                     DataTable dataTable = new DataTable();
@@ -588,6 +594,21 @@ namespace Tutorial3
             else
             {
                 MessageBox.Show("Please select a row to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            currentPage++;
+            PopulateDataGridViewFromDatabase();
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                PopulateDataGridViewFromDatabase();
             }
         }
     }
