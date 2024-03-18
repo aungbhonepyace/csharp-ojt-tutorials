@@ -35,7 +35,7 @@ namespace Tutorial3
             {
                 // If login succeeds, close the login form and open Form1
                 this.Hide(); // Hide the login form
-                staffEntry form1 = new staffEntry();
+                staffListing form1 = new staffListing();
                 form1.ShowDialog(); // Show Form1 as a dialog
                 this.Close(); // Close the login form
             }

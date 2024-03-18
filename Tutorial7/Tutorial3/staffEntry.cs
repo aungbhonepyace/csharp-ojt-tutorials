@@ -611,5 +611,21 @@ namespace Tutorial3
                 PopulateDataGridViewFromDatabase();
             }
         }
+
+        private void staffListingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide(); // Hide the login form
+            staffListing form1 = new staffListing();
+            form1.ShowDialog(); // Show Form1 as a dialog
+            this.Close(); // Close the login form
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide(); // Hide the login form
+            login form2 = new login();
+            form2.ShowDialog(); // Show Form1 as a dialog
+            this.Close(); // Close the login form
+        }
     }
 }
